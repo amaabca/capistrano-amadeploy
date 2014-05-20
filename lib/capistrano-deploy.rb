@@ -19,7 +19,7 @@ module CapistranoDeploy
           recipe.load_into(self)
           @used_recipes << recipe.to_s.split('::').last.downcase.to_sym
         rescue LoadError
-          abort "Are you misspelled `#{recipe_name}` recipe name?"
+          abort "Have you misspelled `#{recipe_name}` recipe name?"
         end
       end
 
