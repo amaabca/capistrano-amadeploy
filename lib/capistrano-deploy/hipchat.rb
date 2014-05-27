@@ -16,7 +16,7 @@ module CapistranoDeploy
           desc 'Set notification in hipchat for deployment end'
           task :end_msg do
             client = HipChat::Client.new(hipchat_token)
-            deploy_text = "#{git_config_user.chomp} is starting deploy of '#{app_name.upcase}' from branch '#{branch.upcase}' to #{current_stage.upcase}"
+            deploy_text = "#{git_config_user.chomp} completed the deploy of '#{app_name.upcase}' from branch '#{branch.upcase}' to #{current_stage.upcase}"
 
             client[hipchat_room].send('Deploy', deploy_text, color: 'green')
           end
