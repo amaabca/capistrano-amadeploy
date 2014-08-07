@@ -3,7 +3,7 @@ module CapistranoDeploy
     def self.load_into(configuration)
       configuration.load do
         set(:unicorn_pid_file) { "#{deploy_to}/tmp/pids/unicorn.pid" }
-        set(:unicorn_pid) { "$(cat #{unicorn_pid_file}" }
+        set(:unicorn_pid) { "$(cat #{unicorn_pid_file})" }
 
         namespace :unicorn do
           desc 'Reload unicorn'
@@ -18,7 +18,7 @@ module CapistranoDeploy
 
           desc 'Reexecute unicorn'
           task :reexec, :roles => :app, :except => {:no_release => true} do
-            run "[[ -e #{{unicorn_pid_file}} ]]; then kill -USR2 #{unicorn_pid}; fi"
+            run "if [ -e #{unicorn_pid_file} ]; then kill -USR2 #{unicorn_pid}; fi"
           end
         end
       end
