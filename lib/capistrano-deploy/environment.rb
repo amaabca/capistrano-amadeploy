@@ -36,15 +36,14 @@ module CapistranoDeploy
                 environment_file: environment_file, 
                 temp_folder: temp_folder, 
                 app_name: app_name, 
-                environment_repository: environment_repository,
-                current_stage: current_stage
+                environment_repository: environment_repository
               )
             
               utilities.fetch_config
             end
           end
 
-          before 'multistage:ensure', 'environment:local:fetch_config'
+          before 'deploy:update', 'environment:local:fetch_config'
           after 'deploy:setup', 'environment:servers:verify'
           after 'environment:servers:verify', 'environment:servers:fetch_config'
 

@@ -8,7 +8,7 @@ module CapistranoDeploy
       self.app_name = args.fetch(:app_name)
       self.environment_repository = args.fetch(:environment_repository)
       self.local_files = args.fetch(:local_files, [])
-      self.current_stage = args.fetch(:current_stage)
+      self.current_stage = args.fetch(:current_stage, nil)
     end
     
     def fetch_config
