@@ -21,7 +21,8 @@ module CapistranoDeploy
             utilities.fetch_config
 
             utilities.local_files.each do |file|
-              if /^y/i =~ Capistrano::CLI.ui.ask("Do you wish to override the existing #{environment_file} file (y/n)? ")
+              msg = "Do you wish to overwrite the #{current_stage} #{environment_file} file with your local version? WARNING: You should have pulled in the latest version locally via the environment:servers:local task (y/n)? "
+              if /^y/i =~ Capistrano::CLI.ui.ask(msg)              
                 upload file, File.join(deploy_to, environment_file)
               else
                 puts "Config not changed"
