@@ -4,6 +4,7 @@ module CapistranoDeploy
       configuration.load do
 
         set(:environment_file) { ".env" }
+        set(:temp_folder) { "./tmp/env_config" }
 
         namespace :environment do
 
@@ -30,16 +31,15 @@ module CapistranoDeploy
           namespace :local do
             desc "Fetch ENV file from remote git repository to your local machine"
             task :fetch_config do
-              if /^y/i =~ Capistrano::CLI.ui.ask("Do you wish to overwrite your local #{environment_file} file (y/n)? ")
-                temp_folder = './tmp/env_config'
-
-                system "rm -rf #{temp_folder} && git clone -n #{environment_repository} --depth 1 #{temp_folder}"
-                system "cd #{temp_folder} && git checkout HEAD #{app_name}/.env.*"
-                system "cp #{temp_folder}/#{app_name}/.env.* ."
-                system "cp .env.development .env"
-              else
-                puts "Environmental files not updated."
-              end
+              require 'capistrano-deploy/utilities'
+              utilities = ::CapistranoDeploy::Utilities.new(
+                environment_file: environment_file, 
+                temp_folder: temp_folder, 
+                app_name: app_name, 
+                environment_repository: environment_repository
+              )
+            
+              utilities.fetch_config
             end
           end
 
