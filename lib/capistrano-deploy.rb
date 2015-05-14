@@ -3,7 +3,7 @@ require 'set'
 
 module CapistranoDeploy
   def _cset(name, *args, &block)
-    unless exists?(name),
+    unless exists?(name)
       set(name, *args, &block)
     end
   end
