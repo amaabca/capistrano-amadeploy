@@ -1,7 +1,13 @@
 require 'capistrano'
-require 'rollbar/capistrano'
+require 'set'
 
 module CapistranoDeploy
+  def _cset(name, *args, &block)
+    unless exists?(name),
+      set(name, *args, &block)
+    end
+  end
+
   def self.load_into(configuration)
     configuration.load do
       @used_recipes = []
