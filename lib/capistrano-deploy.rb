@@ -1,4 +1,5 @@
 require 'capistrano'
+require 'rollbar/capistrano'
 
 module CapistranoDeploy
   def self.load_into(configuration)
