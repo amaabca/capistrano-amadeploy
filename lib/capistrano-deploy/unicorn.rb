@@ -13,7 +13,7 @@ module CapistranoDeploy
 
           desc 'Stop unicorn'
           task :stop, :roles => :app, :except => {:no_release => true} do
-            run "kill -QUIT #{unicorn_pid}"
+            run "kill -TERM #{unicorn_pid}"
           end
 
           desc 'Reexecute unicorn'
