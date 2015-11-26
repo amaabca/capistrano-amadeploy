@@ -5,6 +5,7 @@ module CapistranoDeploy
 
         set(:environment_file) { ".env" }
         set(:temp_folder) { "./tmp/env_config" }
+        set(:environment_branch) { "master" }
 
         namespace :environment do
 
@@ -15,7 +16,7 @@ module CapistranoDeploy
                 path_to_new_env = File.join deploy_to, "tmp", "env_config", app_name, ".env.#{current_stage}"
                 path_to_old_env = File.join deploy_to, environment_file
 
-                run "rm -rf #{deploy_to}/tmp/env_config && git clone -n #{environment_repository} --depth 1 #{deploy_to}/tmp/env_config"
+                run "rm -rf #{deploy_to}/tmp/env_config && git clone -b #{environment_branch} -n #{environment_repository} --depth 1 #{deploy_to}/tmp/env_config"
                 run "cd #{deploy_to}/tmp/env_config && git checkout HEAD #{app_name}/.env.#{current_stage}"
                 run "cp #{path_to_new_env}  #{path_to_old_env}"
               else
@@ -33,12 +34,12 @@ module CapistranoDeploy
             task :fetch_config do
               require 'capistrano-deploy/utilities'
               utilities = ::CapistranoDeploy::Utilities.new(
-                environment_file: environment_file, 
-                temp_folder: temp_folder, 
-                app_name: app_name, 
+                environment_file: environment_file,
+                temp_folder: temp_folder,
+                app_name: app_name,
                 environment_repository: environment_repository
               )
-            
+
               utilities.fetch_config
             end
           end
