@@ -18,7 +18,8 @@ module CapistranoDeploy
 
           desc 'Reexecute unicorn'
           task :reexec, :roles => :app, :except => {:no_release => true} do
-            run "if [ -e #{unicorn_pid_file} ]; then kill -USR2 #{unicorn_pid}; fi"
+            run "~/service/#{app_name}-web-1/run restart ."
+            #run "if [ -e #{unicorn_pid_file} ]; then kill -USR2 #{unicorn_pid}; fi"
           end
         end
       end
