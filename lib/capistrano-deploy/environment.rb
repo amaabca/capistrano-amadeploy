@@ -37,7 +37,8 @@ module CapistranoDeploy
                 environment_file: environment_file,
                 temp_folder: temp_folder,
                 app_name: app_name,
-                environment_repository: environment_repository
+                environment_repository: environment_repository,
+                environment_branch: environment_branch
               )
 
               utilities.fetch_config
