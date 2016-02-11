@@ -14,6 +14,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency('capistrano', '~> 2.9')
   s.add_dependency('hipchat', '1.1.0')
-  s.add_dependency('dotenv', '> 0.8.0')
+  s.add_dependency('dotenv', '~> 1.0.2')
   s.add_dependency('net-ssh', '~> 2.0')
 end
