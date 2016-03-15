@@ -26,12 +26,10 @@ describe 'git' do
     describe 'deploy:setup' do
       it 'clones repository' do
         cli_execute 'deploy:setup'
-        config.should have_run('mkdir -p `dirname /foo/bar` && git clone --no-checkout git@example.com/test-app.git /foo/bar')
+        expect(config).to have_run('mkdir -p `dirname /foo/bar` && git clone --no-checkout git@example.com/test-app.git /foo/bar')
       end
 
       it 'invokes update during setup' do
-        # config.namespaces[:deploy].should_receive(:update)
-        # TODO: I have no idea if this actually works or not :S
         expect(config.namespaces[:deploy]).to receive :update
         cli_execute 'deploy:setup'
       end
@@ -40,18 +38,18 @@ describe 'git' do
     describe 'deploy:update' do
       it 'updates' do
         cli_execute 'deploy:update'
-        config.should have_run('cd /foo/bar && git fetch origin && git reset --hard origin/master')
+        expect(config).to have_run('cd /foo/bar && git fetch origin && git reset --hard origin/master')
       end
 
       it 'updates submodules' do
         mock_config { set :enable_submodules, true }
         cli_execute 'deploy:update'
-        config.should have_run('cd /foo/bar && git fetch origin && git reset --hard origin/master && git submodule init && git submodule -q sync && git submodule -q update')
+        expect(config).to have_run('cd /foo/bar && git fetch origin && git reset --hard origin/master && git submodule init && git submodule -q sync && git submodule -q update')
       end
 
       it 'updates to specific commit' do
         cli_execute 'deploy:update', 'COMMIT=foobarbaz'
-        config.should have_run('cd /foo/bar && git fetch origin && git reset --hard foobarbaz')
+        expect(config).to have_run('cd /foo/bar && git fetch origin && git reset --hard foobarbaz')
       end
     end
   end

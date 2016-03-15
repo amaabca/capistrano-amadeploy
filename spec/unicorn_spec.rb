@@ -7,7 +7,7 @@ describe 'unicorn' do
 
   it 'has default unicorn pid' do
     mock_config { set :deploy_to, '/foo/bar' }
-    config.unicorn_pid.should == '`cat /foo/bar/tmp/pids/unicorn.pid`'
+    expect(config.unicorn_pid).to eq '$(cat /foo/bar/tmp/pids/unicorn.pid)'
   end
 
   context 'signals' do
@@ -17,17 +17,17 @@ describe 'unicorn' do
 
     it 'sends HUP' do
       cli_execute 'unicorn:reload'
-      config.should have_run('kill -HUP /foo.pid')
+      expect(config).to have_run('kill -HUP /foo.pid')
     end
 
     it 'sends QUIT' do
       cli_execute 'unicorn:stop'
-      config.should have_run('kill -QUIT /foo.pid')
+      expect(config).to have_run('kill -QUIT /foo.pid')
     end
 
     it 'sends USR2' do
       cli_execute 'unicorn:reexec'
-      config.should have_run('kill -USR2 /foo.pid')
+      expect(config).to have_run('kill -USR2 /foo.pid')
     end
   end
 end

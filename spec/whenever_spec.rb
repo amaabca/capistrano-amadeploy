@@ -25,7 +25,7 @@ describe 'whenever' do
 
   describe 'whenever_cmd' do
     it 'has default value' do
-      config.whenever_cmd.should == 'whenever'
+      expect(config.whenever_cmd).to eq 'whenever'
       expect(config.whenever_cmd).to eq 'whenever'
     end
 
@@ -43,7 +43,7 @@ describe 'whenever' do
         set :whenever_identifier, 'wi'
       end
       cli_execute 'whenever:update_crontab'
-      config.should have_run('cd /foo/bar && wc --update-crontab wi')
+      expect(config).to have_run('cd /foo/bar && wc --update-crontab wi')
     end
   end
 end
