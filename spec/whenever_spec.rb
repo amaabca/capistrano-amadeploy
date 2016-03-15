@@ -11,7 +11,7 @@ describe 'whenever' do
     end
 
     it 'defaults to application' do
-      config.whenever_identifier.should == 'foo'
+      expect(config.whenever_identifier).to eq 'foo'
     end
 
     it 'default to application with stage when using multistage' do
@@ -19,18 +19,19 @@ describe 'whenever' do
         use_recipe :multistage
         set :current_stage, 'bar'
       end
-      config.whenever_identifier.should == 'foo_bar'
+      expect(config.whenever_identifier).to eq 'foo_bar'
     end
   end
 
   describe 'whenever_cmd' do
     it 'has default value' do
       config.whenever_cmd.should == 'whenever'
+      expect(config.whenever_cmd).to eq 'whenever'
     end
 
     it 'respects bundle recipe' do
       mock_config { use_recipe :bundle }
-      config.whenever_cmd.should == 'bundle exec whenever'
+      expect(config.whenever_cmd).to eq 'bundle exec whenever'
     end
   end
 

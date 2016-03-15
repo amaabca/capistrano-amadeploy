@@ -11,7 +11,7 @@ describe 'git' do
   end
 
   it 'has branch' do
-    config.branch.should == 'master'
+    expect(config.branch).to eq 'master'
   end
 
   context 'with repository' do
@@ -20,7 +20,7 @@ describe 'git' do
     end
 
     it 'sets application from repo' do
-      config.application.should == 'test-app'
+      expect(config.application).to eq 'test-app'
     end
 
     describe 'deploy:setup' do
@@ -30,7 +30,9 @@ describe 'git' do
       end
 
       it 'invokes update during setup' do
-        config.namespaces[:deploy].should_receive(:update)
+        # config.namespaces[:deploy].should_receive(:update)
+        # TODO: I have no idea if this actually works or not :S
+        expect(config.namespaces[:deploy]).to receive :update
         cli_execute 'deploy:setup'
       end
     end
@@ -55,23 +57,23 @@ describe 'git' do
   end
 
   it 'has current revision' do
-    config.should_receive(:capture).with('cd /foo/bar && git rev-parse HEAD') { "baz\n" }
-    config.current_revision.should == 'baz'
+    expect(config).to receive(:capture).with('cd /foo/bar && git rev-parse HEAD') {"baz\n"}
+    expect(config.current_revision).to eq 'baz'
   end
 
   it 'shows pending' do
-    config.should_receive(:current_revision) { 'baz' }
-    config.namespaces[:deploy].should_receive(:system).with('git log --pretty=medium --stat baz..origin/master')
+    expect(config).to receive(:current_revision) { 'baz' }
+    expect(config.namespaces[:deploy]).to receive(:system).with('git log --pretty=medium --stat baz..origin/master')
     cli_execute 'deploy:pending'
   end
 
   it 'shows pending against specific commit' do
-    config.should_receive(:current_revision) { 'baz' }
-    config.namespaces[:deploy].should_receive(:system).with('git log --pretty=medium --stat baz..foobarbaz')
+    expect(config).to receive(:current_revision) { 'baz' }
+    expect(config.namespaces[:deploy]).to receive(:system).with('git log --pretty=medium --stat baz..foobarbaz')
     cli_execute 'deploy:pending', 'COMMIT=foobarbaz'
   end
 
   it 'sets forward agent' do
-    config.ssh_options[:forward_agent].should == true
+    expect(config.ssh_options[:forward_agent]).to be true
   end
 end
