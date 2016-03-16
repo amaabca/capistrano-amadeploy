@@ -28,11 +28,6 @@ describe 'git' do
         cli_execute 'deploy:setup'
         expect(config).to have_run('mkdir -p `dirname /foo/bar` && git clone --no-checkout git@example.com/test-app.git /foo/bar')
       end
-
-      it 'invokes update during setup' do
-        expect(config.namespaces[:deploy]).to receive :update
-        cli_execute 'deploy:setup'
-      end
     end
 
     describe 'deploy:update' do

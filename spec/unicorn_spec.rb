@@ -3,6 +3,7 @@ require 'spec_helper'
 describe 'unicorn' do
   before do
     mock_config { use_recipes :unicorn }
+    mock_config { set :deploy_to, '/foo/bar' }
   end
 
   it 'has default unicorn pid' do
@@ -22,12 +23,12 @@ describe 'unicorn' do
 
     it 'sends QUIT' do
       cli_execute 'unicorn:stop'
-      expect(config).to have_run('kill -QUIT /foo.pid')
+      expect(config).to have_run('kill -TERM /foo.pid')
     end
 
     it 'sends USR2' do
       cli_execute 'unicorn:reexec'
-      expect(config).to have_run('kill -USR2 /foo.pid')
+      expect(config).to have_run('if [ -e /foo/bar/tmp/pids/unicorn.pid ]; then kill -USR2 /foo.pid; fi')
     end
   end
 end
