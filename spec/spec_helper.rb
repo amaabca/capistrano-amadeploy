@@ -1,6 +1,5 @@
 require 'capistrano-deploy'
 require 'capistrano/cli'
-require 'pry'
 
 module CapistranoDeploy
   module Spec
