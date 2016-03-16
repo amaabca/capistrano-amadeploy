@@ -25,7 +25,7 @@ describe 'deploy' do
   it 'aborts when recipe name misspelled' do
     with_stderr do |output|
       expect { config.use_recipe(:rvn) }.to raise_error(SystemExit)
-      output.should include('Are you misspelled `rvn` recipe name?')
+      output.should include('Have you misspelled `rvn` recipe name?')
     end
   end
 

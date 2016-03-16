@@ -1,5 +1,6 @@
 require 'capistrano-deploy'
 require 'capistrano/cli'
+require 'pry'
 
 module CapistranoDeploy
   module Spec
@@ -29,7 +30,6 @@ module CapistranoDeploy
           @config.extend(CapistranoDeploy::Spec::ConfigurationExtension)
           CapistranoDeploy.load_into(@config)
         end
-
         @config.instance_eval(&block)
       end
 

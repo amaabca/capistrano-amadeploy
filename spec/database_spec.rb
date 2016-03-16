@@ -10,7 +10,7 @@ describe 'database' do
 
   describe 'database:configure' do
     it 'uploads config/database.yml' do
-      mock_config.expects(:upload)
+      expect(config).to receive(:upload)
       cli_execute 'database:configure'
     end
   end
