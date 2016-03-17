@@ -9,30 +9,30 @@ describe 'deploy' do
   end
 
   it 'returns used recipes' do
-    config.used_recipes.should == [:git, :rails]
+    expect(config.used_recipes).to eq [:git, :rails]
   end
 
   it 'checks if recipe is used' do
-    config.should be_using_recipe(:git)
-    config.should_not be_using_recipe(:bundle)
+    expect(config.used_recipes.include? :git).to eq true
+    expect(config.used_recipes.include? :bundle).to eq false
   end
 
   it 'uses recipe once' do
     config.use_recipe :git
-    config.used_recipes.should == [:git, :rails]
+    expect(config.used_recipes).to eq [:git, :rails]
   end
 
   it 'aborts when recipe name misspelled' do
     with_stderr do |output|
       expect { config.use_recipe(:rvn) }.to raise_error(SystemExit)
-      output.should include('Have you misspelled `rvn` recipe name?')
+      expect(output.include? "Have you misspelled `rvn` recipe name?\n").to be true
     end
   end
 
   describe 'deploy' do
     it 'runs update and restart' do
       cli_execute 'deploy'
-      config.should have_executed('deploy:update', 'deploy:migrate', 'deploy:restart')
+      expect(config).to have_executed('deploy:update', 'deploy:migrate', 'deploy:restart')
     end
   end
 end
