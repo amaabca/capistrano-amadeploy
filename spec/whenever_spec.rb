@@ -26,7 +26,6 @@ describe 'whenever' do
   describe 'whenever_cmd' do
     it 'has default value' do
       expect(config.whenever_cmd).to eq 'whenever'
-      expect(config.whenever_cmd).to eq 'whenever'
     end
 
     it 'respects bundle recipe' do
