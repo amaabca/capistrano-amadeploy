@@ -9,6 +9,6 @@ describe 'bundler' do
   end
 
   it 'uses bundler alias for bundle recipe' do
-    config.used_recipes.should == [:bundle]
+    expect(config.used_recipes).to eq [:bundle]
   end
 end
