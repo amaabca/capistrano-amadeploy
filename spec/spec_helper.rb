@@ -72,7 +72,7 @@ module CapistranoDeploy
           configuration.runned_commands[cmd]
         end
 
-        failure_message do |configuration|
+        failure_message_for_should do |configuration|
           "expected configuration to run #{cmd}, but it wasn't found in #{configuration.runned_commands.keys}"
         end
       end
@@ -87,7 +87,7 @@ module CapistranoDeploy
           expected.empty?
         end
 
-        failure_message do |configuration|
+        failure_message_for_should do |configuration|
           "expected configuration to execute #{tasks}, but it executed #{configuration.executed_tasks.keys}"
         end
       end

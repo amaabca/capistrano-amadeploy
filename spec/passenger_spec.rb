@@ -11,12 +11,12 @@ describe 'passenger' do
   describe 'passenger:restart' do
     it 'touches tmp/restart.txt' do
       cli_execute 'passenger:restart'
-      expect(config).to have_run('touch /foo/bar/tmp/restart.txt')
+      config.should have_run('touch /foo/bar/tmp/restart.txt')
     end
 
     it 'is executed after deploy:restart' do
       cli_execute 'deploy:restart'
-      expect(config).to have_executed('deploy:restart', 'passenger:restart')
+      config.should have_executed('deploy:restart', 'passenger:restart')
     end
   end
 end

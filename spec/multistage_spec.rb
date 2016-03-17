@@ -16,32 +16,32 @@ describe 'multistage' do
 
   it 'uses default stage' do
     cli_execute 'example'
-    expect(config.current_stage).to eq 'development'
-    expect(config.foo).to eq 'bar'
+    config.current_stage.should == 'development'
+    config.foo.should == 'bar'
   end
 
   it 'aborts when no stage selected' do
     with_stderr do |output|
       config.unset :default_stage
       expect { cli_execute 'example' }.to raise_error(SystemExit)
-      expect(output.include? 'No stage specified. Please specify one of: development, production').to be true
+      output.should include('No stage specified. Please specify one of: development, production')
     end
   end
 
   it 'uses specified stage' do
     cli_execute %w[production example]
-    expect(config.current_stage).to eq 'production'
-    expect(config.foo).to eq 'baz'
+    config.current_stage.should == 'production'
+    config.foo.should == 'baz'
   end
 
   it 'sets variables from options' do
     cli_execute 'another_stage'
-    expect(config.foo).to eq 'bar'
+    config.foo.should == 'bar'
   end
 
   it 'accepts default option' do
     mock_config { stage :to_be_default, :default => true }
-    expect(config.default_stage).to eq :to_be_default
+    config.default_stage.should == :to_be_default
   end
 
   context 'with git' do
@@ -52,15 +52,15 @@ describe 'multistage' do
     it 'infers stage using local branch' do
       config.stub(:local_branch) { 'master' }
       cli_execute 'example'
-      expect(config.current_stage).to eq 'production'
-      expect(config.branch).to eq 'master'
+      config.current_stage.should == 'production'
+      config.branch.should == 'master'
     end
 
     it 'uses default state when local branch not matches' do
       config.stub(:local_branch) { 'foo' }
       cli_execute 'example'
-      expect(config.current_stage).to eq 'development'
-      expect(config.branch).to eq 'develop'
+      config.current_stage.should == 'development'
+      config.branch.should == 'develop'
     end
   end
 end
