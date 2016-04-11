@@ -24,7 +24,7 @@ describe 'multistage' do
     with_stderr do |output|
       config.unset :default_stage
       expect { cli_execute 'example' }.to raise_error(SystemExit)
-      expect(output.include? 'No stage specified. Please specify one of: development, production').to be true
+      expect(output).to include 'No stage specified. Please specify one of: development, production'
     end
   end
 

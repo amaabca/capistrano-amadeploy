@@ -13,8 +13,8 @@ describe 'deploy' do
   end
 
   it 'checks if recipe is used' do
-    expect(config.used_recipes.include? :git).to eq true
-    expect(config.used_recipes.include? :bundle).to eq false
+    expect(config.used_recipes).to include :git
+    expect(config.used_recipes).to_not include :bundle
   end
 
   it 'uses recipe once' do
@@ -25,7 +25,7 @@ describe 'deploy' do
   it 'aborts when recipe name misspelled' do
     with_stderr do |output|
       expect { config.use_recipe(:rvn) }.to raise_error(SystemExit)
-      expect(output.include? "Have you misspelled `rvn` recipe name?\n").to be true
+      expect(output).to include "Have you misspelled `rvn` recipe name?\n"
     end
   end
 
