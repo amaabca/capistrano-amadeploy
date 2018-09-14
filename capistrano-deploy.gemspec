@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
   s.name        = 'capistrano-deploy'
-  s.version     = '0.3.3'
+  s.version     = '1.0.0'
   s.platform    = Gem::Platform::RUBY
   s.authors     = ['Sergey Nartimov']
   s.email       = ['just.lest@gmail.com']
@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
 
   s.add_dependency('capistrano', '~> 2.9')
-  s.add_dependency('hipchat', '1.1.0')
+  s.add_dependency('slack-notifier')
   s.add_dependency('dotenv', '~> 2.1.0')
   s.add_dependency('net-ssh', '~> 2.0')
 end
