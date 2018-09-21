@@ -11,7 +11,7 @@ module CapistranoDeploy
           desc 'Set notification in slack for deployment start'
           task :start_msg do
             notifier = Slack::Notifier.new slack_webhook_url
-            msg = ":eyes: #{app_name.capitalize} Application is Deploying"
+            msg = ":eyes: #{deployer.capitalize} is deploying #{app_name.capitalize}/#{current_stage.capitalize} to #{branch.capitalize}"
             attachments = {
               color: 'warning',
               title: msg,
@@ -37,7 +37,7 @@ module CapistranoDeploy
           desc 'Set notification in slack for deployment end'
           task :end_msg do
             notifier = Slack::Notifier.new slack_webhook_url
-            msg = ":bangbang: #{app_name.capitalize} Application Deployed"
+            msg = ":bangbang: #{deployer.capitalize} has deployed #{app_name.capitalize}/#{current_stage.capitalize} to #{branch.capitalize}"
             attachments = {
               color: 'good',
               title: msg,
