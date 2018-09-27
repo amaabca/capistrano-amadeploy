@@ -1,5 +1,5 @@
 require 'capistrano'
-require 'rails'
+require 'active_support/all'
 require 'slack-notifier'
 
 module CapistranoDeploy
