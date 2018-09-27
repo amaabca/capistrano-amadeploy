@@ -1,4 +1,6 @@
 require 'capistrano'
+require 'rails'
+require 'slack-notifier'
 
 module CapistranoDeploy
   def self.load_into(configuration)

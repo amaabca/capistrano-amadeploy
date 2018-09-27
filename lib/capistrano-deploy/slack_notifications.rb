@@ -3,15 +3,13 @@ module CapistranoDeploy
     def self.load_into(configuration)
       configuration.load do
         namespace :slacknotifications do
-          require 'slack-notifier'
-
           set(:deployer) { %x(git config user.name).chomp }
           set(:elapsed_time) { `ps -p #{$$} -o etime=`.strip }
 
           desc 'Set notification in slack for deployment start'
           task :start_msg do
             notifier = Slack::Notifier.new slack_webhook_url
-            msg = ":eyes: #{deployer.capitalize} is deploying #{app_name.capitalize}/#{current_stage.capitalize} to #{branch.capitalize}"
+            msg = ":eyes: #{deployer.titleize} is deploying #{app_name.titleize}/#{branch.titleize} to #{current_stage.titleize}"
             attachments = {
               color: 'warning',
               title: msg,
@@ -37,7 +35,7 @@ module CapistranoDeploy
           desc 'Set notification in slack for deployment end'
           task :end_msg do
             notifier = Slack::Notifier.new slack_webhook_url
-            msg = ":bangbang: #{deployer.capitalize} has deployed #{app_name.capitalize}/#{current_stage.capitalize} to #{branch.capitalize}"
+            msg = ":bangbang: #{deployer.titleize} has deployed #{app_name.titleize}/#{branch.titleize} to #{current_stage.titleize}"
             attachments = {
               color: 'good',
               title: msg,
